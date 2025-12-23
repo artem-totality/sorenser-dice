@@ -36,6 +36,7 @@ public class Menu {
                     + (textComparator.getStopWordsFilePath() == null ? "Not Set"
                             : textComparator.getStopWordsFilePath())
                     + "]");
+            System.out.println("(4) Compare Text Files");
             System.out.println("(S) Get System Status");
             System.out.println("(Q) Quit");
 
@@ -63,6 +64,12 @@ public class Menu {
                     break;
                 case "3":
                     textComparator.uploadStopWordFilter();
+                    System.out.println();
+                    System.out.println("Please press Enter to continue...");
+                    s.nextLine();
+                    break;
+                case "4":
+                    textComparator.compareFiles();
                     System.out.println();
                     System.out.println("Please press Enter to continue...");
                     s.nextLine();

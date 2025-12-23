@@ -258,6 +258,18 @@ public class TextComparator {
     }
 
     public void compareFiles() {
-        // if
+        try {
+            if (tokensA == null)
+                throw new Exception("Upload first text file!!!");
+
+            if (tokensB == null)
+                throw new Exception("Upload second text file!!!");
+
+            if (isFiltering && stopWordsFilter == null)
+                throw new Exception("Upload Stop Words List or disable filtering!!!");
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 }
