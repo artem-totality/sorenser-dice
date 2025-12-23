@@ -1,8 +1,6 @@
 package ie.atu.sw;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TextPreprocessor {
@@ -17,7 +15,16 @@ public class TextPreprocessor {
     }
 
     private List<String> tokenize(String text) {
-        return Arrays.asList((String[]) Arrays.stream(text.split("\\s+")).filter(s -> !s.equals("")).toArray());
+        // Divide text on tokens
+        var tokens = text.split("\\s+");
+        var filteredTokens = new ArrayList<String>();
+
+        // Filter result from empty string tokens
+        for (var token : tokens)
+            if (!token.equals(""))
+                filteredTokens.add(token);
+
+        return filteredTokens;
     }
 
     public List<String> preprocess(String text) {

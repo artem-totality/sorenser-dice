@@ -21,6 +21,9 @@ public class TextComparator {
     private Set<String> tokensB = null;
     private StopWordFilter stopWordsFilter = null;
 
+    // Text Preprocessor
+    private final TextPreprocessor textPreprocessor = new TextPreprocessor();
+
     // Filtering mode
     private boolean isFiltering = false;
 
@@ -54,12 +57,20 @@ public class TextComparator {
         // else set new work file name & continue uploading
         if (fileName.length() == 0 && textFileAPath == null)
             return;
+
         if (fileName.length() != 0)
             textFileAPath = Paths.get(fileName);
 
         try {
             var lines = FileIO.readFile(textFileAPath);
-            tokensA = new TreeSet<String>(lines);
+            tokensA = new TreeSet<String>();
+
+            for (var line : lines) {
+                var lineTokens = textPreprocessor.preprocess(line);
+
+                for (var token : lineTokens)
+                    tokensA.add(token);
+            }
 
             // Print number uploaded words
             System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
