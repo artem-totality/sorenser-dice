@@ -289,7 +289,20 @@ public class TextComparator {
 
             var similarity = DiceSimilarity.calculate(filteredTokensA, filteredTokensB);
 
-            System.out.println("Dice Similarity: " + String.format("%.3f", similarity));
+            // Print out compearing results
+            System.out.println();
+            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+            System.out.print("Dice Similarity: ");
+            System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
+            System.out.println(String.format("%.3f", similarity));
+
+            // Print out text Filtering Mode
+            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+            System.out.print("Filtering Mode: ");
+            System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
+            System.out.println(isFiltering ? "Enabled" : "Disabled");
+
+            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
