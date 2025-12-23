@@ -44,7 +44,8 @@ public class TextComparator {
 
     public void uploadTextFileA() {
         // using scanner for getting input from user
-        System.out.print("Input Text File A Name > ");
+        System.out.print("Input Text File A Name [Current - "
+                + (getTextFileAPath() == null ? "Not Set" : getTextFileAPath()) + "]> ");
         var s = new Scanner(System.in);
 
         // read user input to the fileName variable
@@ -60,6 +61,15 @@ public class TextComparator {
         try {
             var lines = FileIO.readFile(textFileAPath);
             tokensA = new TreeSet<String>(lines);
+
+            // Print number uploaded words
+            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+            System.out.print("Was uploaded: ");
+            System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
+            System.out.print(tokensA.size());
+
+            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+            System.out.println(" words");
         } catch (Exception e) {
             System.err.println(e.getMessage());
             textFileAPath = null;
