@@ -170,6 +170,9 @@ public class TextComparator {
                     stopWordsSet.add(words[0]);
             }
 
+            if (stopWordsSet.size() == 0)
+                throw new Exception("Stop Word List - Empty!!!");
+
             stopWordsFilter = new StopWordFilter(stopWordsSet);
 
             // Print number uploaded words
@@ -241,5 +244,9 @@ public class TextComparator {
         System.out.println(isFiltering ? "Enabled" : "Disabled");
 
         System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+    }
+
+    public void compareFiles() {
+
     }
 }
