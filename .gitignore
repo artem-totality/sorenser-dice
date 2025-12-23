@@ -1,2 +1,5 @@
 # Compiled classes
 *.class
+
+# Text files
+*.txt
