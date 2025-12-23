@@ -10,10 +10,10 @@ public class DiceSimilarity {
      * @param tokensB - second tokens set
      * @return similarity coefficient
      */
-    public double calculate(
+    public static double calculate(
             Set<String> tokensA,
             Set<String> tokensB) {
-        return 2 * intersectionSize(tokensA, tokensB) / (tokensA.size() + tokensB.size());
+        return 2 * DiceSimilarity.intersectionSize(tokensA, tokensB) / (tokensA.size() + tokensB.size());
     }
 
     /**
@@ -23,7 +23,7 @@ public class DiceSimilarity {
      * @param b - second tokens set
      * @return number of common elements
      */
-    private int intersectionSize(
+    private static int intersectionSize(
             Set<String> a,
             Set<String> b) {
 

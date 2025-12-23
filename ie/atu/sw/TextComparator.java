@@ -268,6 +268,12 @@ public class TextComparator {
             if (isFiltering && stopWordsFilter == null)
                 throw new Exception("Upload Stop Words List or disable filtering!!!");
 
+            var filteredTokensA = isFiltering ? stopWordsFilter.filter(tokensA) : tokensA;
+            var filteredTokensB = isFiltering ? stopWordsFilter.filter(tokensB) : tokensB;
+
+            var similarity = DiceSimilarity.calculate(filteredTokensA, filteredTokensB);
+
+            System.out.println(similarity);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
