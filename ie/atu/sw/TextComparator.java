@@ -12,9 +12,9 @@ import java.util.TreeSet;
 
 public class TextComparator {
     // Paths to work files
-    private Path textFileA = null;
-    private Path textFileB = null;
-    private Path stopWordsFile = null;
+    private Path textFileAPath = null;
+    private Path textFileBPath = null;
+    private Path stopWordsFilePath = null;
 
     // Sets of words
     private Set<String> tokensA = null;
@@ -24,20 +24,16 @@ public class TextComparator {
     // Filtering mode
     private boolean isFiltering = false;
 
-    public void setStopWordsFile(String stopWordsFilePath) {
-        this.stopWordsFile = Paths.get(stopWordsFilePath);
+    public Path getTextFileAPath() {
+        return textFileAPath;
     }
 
-    public Path getTextFileA() {
-        return textFileA;
+    public Path getTextFileBPath() {
+        return textFileBPath;
     }
 
-    public Path getTextFileB() {
-        return textFileB;
-    }
-
-    public Path getStopWordsFile() {
-        return stopWordsFile;
+    public Path getStopWordsFilePath() {
+        return stopWordsFilePath;
     }
 
     public void uploadTextFileA() {
@@ -50,19 +46,19 @@ public class TextComparator {
 
         // if fileName variable is emty - return
         // else set new work file name & continue uploading
-        if (fileName.length() == 0)
+        if (fileName.length() == 0 && textFileAPath == null)
             return;
 
-        textFileA = Paths.get(fileName);
+        textFileAPath = Paths.get(fileName);
 
         try {
-            var lines = FileIO.readFile(textFileA);
+            var lines = FileIO.readFile(textFileAPath);
             tokensA = new TreeSet<String>(lines);
         } catch (Exception e) {
             System.err.println(e.getMessage());
-            textFileA = null;
+            textFileAPath = null;
+            tokensA = null;
         }
-
     };
 
     /**
@@ -76,7 +72,7 @@ public class TextComparator {
         System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
         System.out.print("Current text file A: ");
         System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-        System.out.println(textFileA == null ? "Not Set" : textFileA);
+        System.out.println(textFileAPath == null ? "Not Set" : textFileAPath);
 
         // Print out tokens A set status
         System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
@@ -89,7 +85,7 @@ public class TextComparator {
         System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
         System.out.print("Current text file B: ");
         System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-        System.out.println(textFileA == null ? "Not Set" : textFileB);
+        System.out.println(textFileBPath == null ? "Not Set" : textFileBPath);
 
         // Print out text Filtering Mode
         System.out.println();

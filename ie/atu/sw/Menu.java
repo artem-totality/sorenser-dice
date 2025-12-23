@@ -26,7 +26,9 @@ public class Menu {
             System.out.println("*         Computing the Sørensen-Dice similarity           *");
             System.out.println("*                                                          *");
             System.out.println("************************************************************");
-            System.out.println("(1) Upload Text File A");
+            System.out.println("(1) Upload Text File A [Current - "
+                    + (textComparator.getTextFileAPath() == null ? "Not Set" : textComparator.getTextFileAPath())
+                    + "]");
             System.out.println("(S) Get System Status");
             System.out.println("(Q) Quit");
 
