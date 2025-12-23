@@ -3,6 +3,8 @@ package ie.atu.sw;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Main Project Class (Engine)
@@ -14,12 +16,13 @@ public class TextComparator {
     private Path textFileB = null;
     private Path stopWordsFile = null;
 
+    // Sets of words
+    private Set<String> tokensA = null;
+    private Set<String> tokensB = null;
+    private Set<String> stopWords = null;
+
     // Filtering mode
     private boolean isFiltering = false;
-
-    public void setTextFileB(String textFileBPath) {
-        this.textFileB = Paths.get(textFileBPath);
-    }
 
     public void setStopWordsFile(String stopWordsFilePath) {
         this.stopWordsFile = Paths.get(stopWordsFilePath);
@@ -39,17 +42,22 @@ public class TextComparator {
 
     public void uploadTextFileA() {
         // using scanner for getting input from user
-        System.out.print("Input Text File A Name> ");
-        try (var s = new Scanner(System.in)) {
-            // read user input to the fileName variable
-            var fileName = s.nextLine();
+        System.out.print("Input Text File A Name > ");
+        var s = new Scanner(System.in);
 
-            // if fileName variable is emty - return
-            // else set new work file name & continue uploading
-            if (fileName.length() == 0)
-                return;
+        // read user input to the fileName variable
+        var fileName = s.nextLine();
 
-            textFileA = Paths.get(fileName);
+        // if fileName variable is emty - return
+        // else set new work file name & continue uploading
+        if (fileName.length() == 0)
+            return;
+
+        textFileA = Paths.get(fileName);
+
+        try {
+            var lines = FileIO.readFile(textFileA);
+            tokensA = new TreeSet<String>(lines);
         } catch (Exception e) {
             System.err.println(e.getMessage());
             textFileA = null;
@@ -65,14 +73,31 @@ public class TextComparator {
 
     public void getSystemStatus() {
         // Print out text file A name
-        System.out.println("Current mapping file: " + (textFileA == null ? "Not Set" : textFileA));
+        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+        System.out.print("Current text file A: ");
+        System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
+        System.out.println(textFileA == null ? "Not Set" : textFileA);
+
+        // Print out tokens A set status
+        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+        System.out.print("Current tokens A set: ");
+        System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
+        System.out.println(tokensA == null ? "Not Set" : (tokensA.size() == 0 ? "Empty" : tokensA.size()));
 
         // Print out text file B name
         System.out.println();
-        System.out.println("Current mapping file: " + (textFileB == null ? "Not Set" : textFileB));
+        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+        System.out.print("Current text file B: ");
+        System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
+        System.out.println(textFileA == null ? "Not Set" : textFileB);
 
         // Print out text Filtering Mode
         System.out.println();
-        System.out.println("Filtering Mode: " + (isFiltering ? "Enabled" : "Disabled"));
+        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+        System.out.print("Filtering Mode: ");
+        System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
+        System.out.println(isFiltering ? "Enabled" : "Disabled");
+
+        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
     }
 }
