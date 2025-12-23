@@ -44,4 +44,22 @@ public class StopWordFilter {
 
         return filteredTokens;
     }
+
+    public double calculateNoiseRatio(
+            Set<String> tokens) throws Exception {
+        var noiseCounter = 0d;
+        var iter = tokens.iterator();
+
+        while (iter.hasNext()) {
+            var token = iter.next();
+
+            if (stopWords.contains(token))
+                noiseCounter += 1;
+        }
+
+        if (tokens.size() - noiseCounter < MIN_TOKENS)
+            throw new Exception("Too few tokens after filtering!!!");
+
+        return noiseCounter / tokens.size();
+    }
 }
