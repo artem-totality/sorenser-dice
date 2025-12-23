@@ -7,6 +7,7 @@ import java.util.Set;
  */
 
 public class StopWordFilter {
+    // Stop words list
     private final Set<String> stopWords;
 
     public StopWordFilter(Set<String> stopWords) {
@@ -18,6 +19,7 @@ public class StopWordFilter {
      * 
      * @return size of the current stop words list
      */
+
     public int getSize() {
         return stopWords.size();
     }
