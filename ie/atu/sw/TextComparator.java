@@ -2,6 +2,7 @@ package ie.atu.sw;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 /**
  * Main Project Class (Engine)
@@ -15,10 +16,6 @@ public class TextComparator {
 
     // Filtering mode
     private boolean isFiltering = false;
-
-    public void setTextFileA(String textFileAPath) {
-        this.textFileA = Paths.get(textFileAPath);
-    }
 
     public void setTextFileB(String textFileBPath) {
         this.textFileB = Paths.get(textFileBPath);
@@ -41,7 +38,23 @@ public class TextComparator {
     }
 
     public void uploadTextFileA() {
-        System.out.println("Upload Text File A");
+        // using scanner for getting input from user
+        System.out.print("Input Text File A Name> ");
+        try (var s = new Scanner(System.in)) {
+            // read user input to the fileName variable
+            var fileName = s.nextLine();
+
+            // if fileName variable is emty - return
+            // else set new work file name & continue uploading
+            if (fileName.length() == 0)
+                return;
+
+            textFileA = Paths.get(fileName);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            textFileA = null;
+        }
+
     };
 
     /**
