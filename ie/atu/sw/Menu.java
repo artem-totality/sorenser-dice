@@ -26,6 +26,8 @@ public class Menu {
             System.out.println("*         Computing the Sørensen-Dice similarity           *");
             System.out.println("*                                                          *");
             System.out.println("************************************************************");
+            System.out.println("(1) Upload Text File A");
+            System.out.println("(S) Get System Status");
             System.out.println("(Q) Quit");
 
             // Output a menu of options and solicit text from the user
@@ -40,6 +42,12 @@ public class Menu {
             switch (choice) {
                 case "1":
                     textComparator.uploadTextFileA();
+                    System.out.println();
+                    System.out.println("Please press Enter to continue...");
+                    s.nextLine();
+                    break;
+                case "S":
+                    textComparator.getSystemStatus();
                     System.out.println();
                     System.out.println("Please press Enter to continue...");
                     s.nextLine();
