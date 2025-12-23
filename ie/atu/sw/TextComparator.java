@@ -47,7 +47,7 @@ public class TextComparator {
     public void uploadTextFileA() {
         // using scanner for getting input from user
         System.out.print("Input Text File A Name [Current - "
-                + (getTextFileAPath() == null ? "Not Set" : getTextFileAPath()) + "]> ");
+                + (textFileAPath == null ? "Not Set" : textFileAPath) + "]> ");
         var s = new Scanner(System.in);
 
         // read user input to the fileName variable
@@ -84,6 +84,53 @@ public class TextComparator {
             System.err.println(e.getMessage());
             textFileAPath = null;
             tokensA = null;
+        }
+    };
+
+    /**
+     * Prompt user to enter text B file name and upload it
+     * to the system
+     */
+    public void uploadTextFileB() {
+        // using scanner for getting input from user
+        System.out.print("Input Text File A Name [Current - "
+                + (textFileBPath == null ? "Not Set" : textFileBPath) + "]> ");
+        var s = new Scanner(System.in);
+
+        // read user input to the fileName variable
+        var fileName = s.nextLine();
+
+        // if fileName variable is emty - return
+        // else set new work file name & continue uploading
+        if (fileName.length() == 0 && textFileBPath == null)
+            return;
+
+        if (fileName.length() != 0)
+            textFileBPath = Paths.get(fileName);
+
+        try {
+            var lines = FileIO.readFile(textFileBPath);
+            tokensB = new TreeSet<String>();
+
+            for (var line : lines) {
+                var lineTokens = textPreprocessor.preprocess(line);
+
+                for (var token : lineTokens)
+                    tokensB.add(token);
+            }
+
+            // Print number uploaded words
+            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+            System.out.print("Was uploaded: ");
+            System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
+            System.out.print(tokensB.size());
+
+            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+            System.out.println(" words");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            textFileBPath = null;
+            tokensB = null;
         }
     };
 

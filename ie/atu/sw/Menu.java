@@ -29,6 +29,9 @@ public class Menu {
             System.out.println("(1) Upload Text File A [Current - "
                     + (textComparator.getTextFileAPath() == null ? "Not Set" : textComparator.getTextFileAPath())
                     + "]");
+            System.out.println("(2) Upload Text File A [Current - "
+                    + (textComparator.getTextFileBPath() == null ? "Not Set" : textComparator.getTextFileBPath())
+                    + "]");
             System.out.println("(3) Upload Stop Words List File [Current - "
                     + (textComparator.getStopWordsFilePath() == null ? "Not Set"
                             : textComparator.getStopWordsFilePath())
@@ -48,6 +51,12 @@ public class Menu {
             switch (choice) {
                 case "1":
                     textComparator.uploadTextFileA();
+                    System.out.println();
+                    System.out.println("Please press Enter to continue...");
+                    s.nextLine();
+                    break;
+                case "2":
+                    textComparator.uploadTextFileB();
                     System.out.println();
                     System.out.println("Please press Enter to continue...");
                     s.nextLine();
