@@ -11,6 +11,9 @@ import java.util.TreeSet;
  */
 
 public class TextComparator {
+    // Minimum number of tokens for similarity calculation
+    static final int MIN_TOKENS = 3;
+
     // Paths to work files
     private Path textFileAPath = null;
     private Path textFileBPath = null;
@@ -37,6 +40,11 @@ public class TextComparator {
 
     public Path getStopWordsFilePath() {
         return stopWordsFilePath;
+    }
+
+    private void checkMinimumTokensNumber(Set<String> set) throws Exception {
+        if (set.size() < TextComparator.MIN_TOKENS)
+            throw new Exception("A minimum of three unique tokens is required!!!");
     }
 
     /**
@@ -71,6 +79,8 @@ public class TextComparator {
                 for (var token : lineTokens)
                     tokensA.add(token);
             }
+
+            checkMinimumTokensNumber(tokensA);
 
             // Print number uploaded words
             System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
@@ -118,6 +128,8 @@ public class TextComparator {
                 for (var token : lineTokens)
                     tokensB.add(token);
             }
+
+            checkMinimumTokensNumber(tokensB);
 
             // Print number uploaded words
             System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
@@ -207,7 +219,7 @@ public class TextComparator {
         System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
         System.out.print("Current tokens A set: ");
         System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-        System.out.println(tokensA == null ? "Not Set" : (tokensA.size() == 0 ? "Empty" : tokensA.size()));
+        System.out.println(tokensA == null ? "Not Set" : tokensA.size());
 
         // Print out text file B name
         System.out.println();
@@ -220,7 +232,7 @@ public class TextComparator {
         System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
         System.out.print("Current tokens B set: ");
         System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-        System.out.println(tokensB == null ? "Not Set" : (tokensB.size() == 0 ? "Empty" : tokensB.size()));
+        System.out.println(tokensB == null ? "Not Set" : tokensB.size());
 
         // Print out stop words list name
         System.out.println();
@@ -233,8 +245,7 @@ public class TextComparator {
         System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
         System.out.print("Current Stop Words set: ");
         System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-        System.out.println(stopWordsFilter == null ? "Not Set"
-                : (stopWordsFilter.getSize() == 0 ? "Empty" : stopWordsFilter.getSize()));
+        System.out.println(stopWordsFilter == null ? "Not Set" : stopWordsFilter.getSize());
 
         // Print out text Filtering Mode
         System.out.println();
@@ -247,6 +258,6 @@ public class TextComparator {
     }
 
     public void compareFiles() {
-
+        // if
     }
 }

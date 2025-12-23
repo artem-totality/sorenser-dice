@@ -29,6 +29,7 @@ public class DiceSimilarity {
 
         var intersection = 0;
 
+        // For optimization purposes, we iterate over a smaller set of tokens
         if (a.size() < b.size()) {
             var iter = a.iterator();
 
