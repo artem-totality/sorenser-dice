@@ -185,7 +185,7 @@ public class TextComparator {
             if (stopWordsSet.size() == 0)
                 throw new Exception("Stop Word List - Empty!!!");
 
-            stopWordsFilter = new StopWordFilter(stopWordsSet);
+            stopWordsFilter = new StopWordFilter(stopWordsSet, TextComparator.MIN_TOKENS);
 
             // Print number uploaded words
             System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
