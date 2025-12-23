@@ -9,9 +9,12 @@ public class TextPreprocessor {
     };
 
     private String removePunctuation(String text) {
-        return text.replaceAll("[^\\p{L}\\p{N}\\s]", " ")
-                .replaceAll("\\s+", " ")
+        var cleaned = text.replaceAll("[^\\p{L}\\p{N}\\s-]", " ") // remove punctuation
+                .replaceAll("\\s+", " ") // multiple spaces into one
+                .replaceAll("\\s-\\s|-\\s|\\s-", " ") // removing free-standing hyphens
                 .trim();
+
+        return cleaned;
     }
 
     private List<String> tokenize(String text) {
