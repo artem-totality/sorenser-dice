@@ -13,7 +13,8 @@ public class DiceSimilarity {
     public static double calculate(
             Set<String> tokensA,
             Set<String> tokensB) {
-        return 2 * DiceSimilarity.intersectionSize(tokensA, tokensB) / (tokensA.size() + tokensB.size());
+
+        return 2d * DiceSimilarity.intersectionSize(tokensA, tokensB) / (tokensA.size() + tokensB.size());
     }
 
     /**
