@@ -40,7 +40,7 @@ public class StopWordFilter {
         }
 
         if (filteredTokens.size() < MIN_TOKENS)
-            throw new Exception("Too few tokens after filtering!!!");
+            throw new Exception("Too few tokens after filtering - Disable Filtering!!!");
 
         return filteredTokens;
     }

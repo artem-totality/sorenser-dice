@@ -42,6 +42,22 @@ public class TextComparator {
         return stopWordsFilePath;
     }
 
+    public boolean getIsFiltering() {
+        return isFiltering;
+    }
+
+    public void switchFilteringMode() {
+        isFiltering = !isFiltering;
+
+        // Print filtering mode
+        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+        System.out.print("Current filtering mode: ");
+        System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
+        System.out.print(isFiltering ? "Enabled" : "Disabled");
+
+        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+    }
+
     private void checkMinimumTokensNumber(Set<String> set) throws Exception {
         if (set.size() < TextComparator.MIN_TOKENS)
             throw new Exception("A minimum of three unique tokens is required!!!");
@@ -273,7 +289,7 @@ public class TextComparator {
 
             var similarity = DiceSimilarity.calculate(filteredTokensA, filteredTokensB);
 
-            System.out.println(similarity);
+            System.out.println("Dice Similarity: " + String.format("%.3f", similarity));
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }

@@ -37,6 +37,9 @@ public class Menu {
                             : textComparator.getStopWordsFilePath())
                     + "]");
             System.out.println("(4) Compare Text Files");
+            System.out.println("(5) Switch Filtering Mode[Current - "
+                    + (textComparator.getIsFiltering() ? "Enabled" : "Disabled")
+                    + "]");
             System.out.println("(S) Get System Status");
             System.out.println("(Q) Quit");
 
@@ -70,6 +73,12 @@ public class Menu {
                     break;
                 case "4":
                     textComparator.compareFiles();
+                    System.out.println();
+                    System.out.println("Please press Enter to continue...");
+                    s.nextLine();
+                    break;
+                case "5":
+                    textComparator.switchFilteringMode();
                     System.out.println();
                     System.out.println("Please press Enter to continue...");
                     s.nextLine();
