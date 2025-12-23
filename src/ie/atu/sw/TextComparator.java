@@ -294,7 +294,7 @@ public class TextComparator {
             System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
             System.out.print("Dice Similarity: ");
             System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-            System.out.println(String.format("%.3f", similarity));
+            System.out.println(String.format("%.2f", similarity));
 
             // Print out text Filtering Mode
             System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
@@ -305,6 +305,57 @@ public class TextComparator {
             System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
         } catch (Exception e) {
             System.err.println(e.getMessage());
+        }
+    }
+
+    public void noiseAnalyzer() {
+        if (stopWordsFilePath == null || tokensA == null || tokensB == null) {
+            // Print out text Filtering Mode
+            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+            System.out.println("Please Upload Text A, Text B and Stop Word List!!!");
+
+            return;
+        }
+
+        var textANoiseRatio = 0d;
+        var textBNoiseRatio = 0d;
+        var isFilterNotApplicable = false;
+
+        try {
+            textANoiseRatio = stopWordsFilter.calculateNoiseRatio(tokensA);
+
+            // Print out text Filtering Mode
+            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+            System.out.print("Text A Noise Ratio: ");
+            System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
+            System.out.println(String.format("%.2f", textANoiseRatio));
+
+            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            isFilterNotApplicable = true;
+        }
+
+        try {
+            textBNoiseRatio = stopWordsFilter.calculateNoiseRatio(tokensB);
+
+            // Print out text Filtering Mode
+            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+            System.out.print("Text B Noise Ratio: ");
+            System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
+            System.out.println(String.format("%.2f", textBNoiseRatio));
+
+            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            isFilterNotApplicable = true;
+        }
+
+        if (isFilterNotApplicable) {
+            System.out.println("Filter Not Applicable!");
+            return;
         }
     }
 }

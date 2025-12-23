@@ -40,7 +40,8 @@ public class Menu {
             System.out.println("(5) Switch Filtering Mode[Current - "
                     + (textComparator.getIsFiltering() ? "Enabled" : "Disabled")
                     + "]");
-            System.out.println("(S) Get System Status");
+            System.out.println("(6) Noise Analizer");
+            System.out.println("(7) Get System Status");
             System.out.println("(Q) Quit");
 
             // Output a menu of options and solicit text from the user
@@ -83,7 +84,13 @@ public class Menu {
                     System.out.println("Please press Enter to continue...");
                     s.nextLine();
                     break;
-                case "S":
+                case "6":
+                    textComparator.noiseAnalyzer();
+                    System.out.println();
+                    System.out.println("Please press Enter to continue...");
+                    s.nextLine();
+                    break;
+                case "7":
                     textComparator.getSystemStatus();
                     System.out.println();
                     System.out.println("Please press Enter to continue...");
