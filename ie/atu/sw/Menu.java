@@ -15,6 +15,7 @@ public class Menu {
 
     public static void performMenu() {
         Scanner s = new Scanner(System.in);
+        var textComparator = new TextComparator();
 
         while (true) {
             ConsoleIO.clearConsole();
@@ -37,6 +38,12 @@ public class Menu {
 
             // Perform user choice
             switch (choice) {
+                case "1":
+                    textComparator.uploadTextFileA();
+                    System.out.println();
+                    System.out.println("Please press Enter to continue...");
+                    s.nextLine();
+                    break;
                 case "Q":
                     System.out.println("Bye, bye!");
                     s.close();

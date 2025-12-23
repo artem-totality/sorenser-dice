@@ -32,4 +32,6 @@ public class TextComparator {
         return stopWordsFile;
     }
 
+    public void uploadTextFileA() {
+    };
 }
