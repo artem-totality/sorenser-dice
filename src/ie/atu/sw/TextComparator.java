@@ -281,7 +281,7 @@ public class TextComparator {
 
         // Print out stop words list name
         System.out.println();
-        printMsg("Current stop words list file: ", stopWordsFilePath == null ? "Not Set" : stopWordsFilePath);
+        printMsg("Current Stop Words file: ", stopWordsFilePath == null ? "Not Set" : stopWordsFilePath);
 
         // Print out Stop Words set status
         printMsg("Current Stop Words set: ", stopWordsFilter == null ? "Not Set" : stopWordsFilter.getSize());
@@ -304,6 +304,8 @@ public class TextComparator {
 
             var filteredTokensA = isFiltering ? stopWordsFilter.filter(tokensA) : tokensA;
             var filteredTokensB = isFiltering ? stopWordsFilter.filter(tokensB) : tokensB;
+
+            System.out.println(filteredTokensA.size() + "  -  " + filteredTokensB.size());
 
             var similarity = DiceSimilarity.calculate(filteredTokensA, filteredTokensB);
 
