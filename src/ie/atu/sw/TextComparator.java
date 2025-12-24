@@ -8,6 +8,23 @@ import java.util.TreeSet;
 
 import static ie.atu.sw.ConsoleIO.*;
 
+enum FilterRequirement {
+    NO_FILTER_NEEDED("No filter needed"),
+    AT_YOUR_DISCRETION("At your discretion"),
+    HIGHLY_DESIRABLE("A filter is highly desirable");
+
+    private final String displayName;
+
+    FilterRequirement(String displayName) {
+        this.displayName = displayName;
+    }
+
+    @Override
+    public String toString() {
+        return displayName;
+    }
+}
+
 /**
  * Main Project Class (Engine)
  */
@@ -273,21 +290,40 @@ public class TextComparator {
         var textBNoiseRatio = 0d;
         var isFilterNotApplicable = false;
 
+        System.out.println("Noise Ratio Interpretation:");
+        System.out.println();
+        printMsg(FilterRequirement.NO_FILTER_NEEDED + ": ", "< 20%");
+        printMsg(FilterRequirement.AT_YOUR_DISCRETION + ": ", "20% - 40%");
+        printMsg(FilterRequirement.HIGHLY_DESIRABLE + ": ", "> 40%");
+
+        System.out.println();
+        System.out.println("Noise analysis:");
+
+        System.out.println();
         try {
             textANoiseRatio = stopWordsFilter.calculateNoiseRatio(tokensA);
 
             // Print out text Filtering Mode
             printMsg("Text A Noise Ratio: ", (int) (100 * textANoiseRatio) + "%");
+            System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
+            printProgress((int) (100 * textANoiseRatio), 100);
+            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+            System.out.println();
         } catch (Exception e) {
             System.err.println(e.getMessage());
             isFilterNotApplicable = true;
         }
 
+        System.out.println();
         try {
             textBNoiseRatio = stopWordsFilter.calculateNoiseRatio(tokensB);
 
             // Print out text Filtering Mode
             printMsg("Text B Noise Ratio: ", (int) (100 * textBNoiseRatio) + "%");
+            System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
+            printProgress((int) (100 * textBNoiseRatio), 100);
+            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+            System.out.println();
         } catch (Exception e) {
             System.err.println(e.getMessage());
             isFilterNotApplicable = true;
@@ -299,5 +335,23 @@ public class TextComparator {
             return;
         }
 
+        var maxRatio = Math.max(textANoiseRatio, textBNoiseRatio);
+        System.out.println();
+        if (maxRatio < 0.2) {
+            printMsg("General conclusion: ",
+                    "Max noise ratio is " + (int) (100 * textANoiseRatio) + "% - "
+                            + FilterRequirement.NO_FILTER_NEEDED);
+            return;
+        }
+
+        if (0.2 <= maxRatio && maxRatio <= 0.4) {
+            printMsg("General conclusion: ",
+                    "Max noise ratio is " + (int) (100 * textANoiseRatio) + "% "
+                            + FilterRequirement.AT_YOUR_DISCRETION);
+            return;
+        }
+
+        printMsg("General conclusion: ",
+                "Max noise ratio is " + (int) (100 * textANoiseRatio) + "% " + FilterRequirement.HIGHLY_DESIRABLE);
     }
 }
