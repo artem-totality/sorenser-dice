@@ -11,7 +11,8 @@ import static ie.atu.sw.ConsoleIO.*;
 enum FilterRequirement {
     NO_FILTER_NEEDED("No filter needed"),
     AT_YOUR_DISCRETION("At your discretion"),
-    HIGHLY_DESIRABLE("A filter is highly desirable");
+    HIGHLY_DESIRABLE("A filter is highly desirable"),
+    NOT_APPLICABLE("Filter Not Applicable!");
 
     private final String displayName;
 
@@ -118,7 +119,7 @@ public class TextComparator {
             // Print number uploaded words
             printMsg("Words was uploaded: ", tokensA.size());
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            printErr(e);
             textFileAPath = null;
             tokensA = null;
         }
@@ -162,7 +163,7 @@ public class TextComparator {
             printMsg("Words was uploaded: ", tokensB.size());
             ;
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            printErr(e);
             textFileBPath = null;
             tokensB = null;
         }
@@ -213,7 +214,7 @@ public class TextComparator {
             // Print number uploaded words
             printMsg("Words was uploaded: ", stopWordsFilter.getSize());
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            printErr(e);
             stopWordsFilePath = null;
             stopWordsFilter = null;
         }
@@ -274,7 +275,7 @@ public class TextComparator {
             // Print out text Filtering Mode
             printMsg("Filtering Mode: ", isFiltering ? "Enabled" : "Disabled");
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            printErr(e);
         }
     }
 
@@ -311,7 +312,7 @@ public class TextComparator {
             System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
             System.out.println();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            printErr(e);
             isFilterNotApplicable = true;
         }
 
@@ -326,13 +327,13 @@ public class TextComparator {
             System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
             System.out.println();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            printErr(e);
             isFilterNotApplicable = true;
         }
 
         if (isFilterNotApplicable) {
             System.out.println();
-            printMsg("General conclusion: ", "Filter Not Applicable!");
+            printMsg("General conclusion: ", FilterRequirement.NOT_APPLICABLE);
             return;
         }
 

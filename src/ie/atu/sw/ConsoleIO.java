@@ -16,6 +16,13 @@ public class ConsoleIO {
         System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
     }
 
+    public final static void printErr(Exception e) {
+        System.out.print(ConsoleColour.RED_BOLD_BRIGHT);
+        System.out.println(e.getMessage());
+
+        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+    }
+
     /*
      * Terminal Progress Meter
      * -----------------------
