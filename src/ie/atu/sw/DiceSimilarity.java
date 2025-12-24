@@ -29,27 +29,42 @@ public class DiceSimilarity {
             Set<String> b) {
 
         var intersection = 0;
+        var counter = 0;
+
+        System.out.println("Process:");
+        System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
 
         // For optimization purposes, we iterate over a smaller set of tokens
         if (a.size() < b.size()) {
             var iter = a.iterator();
+            var total = a.size();
 
             while (iter.hasNext()) {
                 var token = iter.next();
 
                 if (b.contains(token))
                     intersection += 1;
+
+                counter += 1;
+                ConsoleIO.printProgress(counter, total);
             }
         } else {
             var iter = b.iterator();
+            var total = b.size();
 
             while (iter.hasNext()) {
                 var token = iter.next();
 
                 if (a.contains(token))
                     intersection += 1;
+
+                counter += 1;
+                ConsoleIO.printProgress(counter, total);
             }
         }
+
+        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+        System.out.println();
 
         return intersection;
     }

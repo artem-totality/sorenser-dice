@@ -29,7 +29,7 @@ public class Menu {
             System.out.println("(1) Upload Text File A [Current - "
                     + (textComparator.getTextFileAPath() == null ? "Not Set" : textComparator.getTextFileAPath())
                     + "]");
-            System.out.println("(2) Upload Text File A [Current - "
+            System.out.println("(2) Upload Text File B [Current - "
                     + (textComparator.getTextFileBPath() == null ? "Not Set" : textComparator.getTextFileBPath())
                     + "]");
             System.out.println("(3) Upload Stop Words List File [Current - "

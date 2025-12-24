@@ -327,10 +327,11 @@ public class TextComparator {
     }
 
     public void noiseAnalyzer() {
-        if (stopWordsFilePath == null || tokensA == null || tokensB == null) {
+        if (stopWordsFilter == null || tokensA == null || tokensB == null) {
             // Print out text Filtering Mode
-            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+            System.out.print(ConsoleColour.RED_BOLD_BRIGHT);
             System.out.println("Please Upload Text A, Text B and Stop Word List!!!");
+            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
 
             return;
         }
