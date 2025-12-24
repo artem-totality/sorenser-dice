@@ -7,6 +7,15 @@ public class ConsoleIO {
         System.out.flush();
     }
 
+    public final static void printMsg(String caption, String value) {
+        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+        System.out.print(caption);
+        System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
+        System.out.println(value);
+
+        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+    }
+
     /*
      * Terminal Progress Meter
      * -----------------------
