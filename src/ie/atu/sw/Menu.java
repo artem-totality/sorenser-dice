@@ -102,7 +102,7 @@ public class Menu {
                     return;
                 // if was entered wrong option ask to repeat the process
                 default:
-                    System.out.println("Please input number between 1 and X or Q for quit!");
+                    System.out.println("Please input number between 1 and 7 or Q for quit!");
                     System.out.println();
                     System.out.println("Please press Enter to continue...");
                     s.nextLine();

@@ -305,8 +305,6 @@ public class TextComparator {
             var filteredTokensA = isFiltering ? stopWordsFilter.filter(tokensA) : tokensA;
             var filteredTokensB = isFiltering ? stopWordsFilter.filter(tokensB) : tokensB;
 
-            System.out.println(filteredTokensA.size() + "  -  " + filteredTokensB.size());
-
             var similarity = DiceSimilarity.calculate(filteredTokensA, filteredTokensB);
 
             // Print out compearing results
