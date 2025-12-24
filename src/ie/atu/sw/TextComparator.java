@@ -130,7 +130,7 @@ public class TextComparator {
      */
     public void uploadTextFileB() {
         // using scanner for getting input from user
-        System.out.print("Input Text File A Name [Current - "
+        System.out.print("Input Text File B Name [Current - "
                 + (textFileBPath == null ? "Not Set" : textFileBPath) + "]> ");
         var s = new Scanner(System.in);
 
@@ -170,7 +170,8 @@ public class TextComparator {
 
     public void uploadStopWordFilter() {
         // using scanner for getting input from user
-        System.out.print("Input Stop Word List File Name > ");
+        System.out.print("Input Stop Word List File Name [Current - " +
+                (stopWordsFilePath == null ? "Not Set" : stopWordsFilePath) + "]> ");
         var s = new Scanner(System.in);
 
         // read user input to the fileName variable
