@@ -164,14 +164,7 @@ public class TextComparator {
 
         try {
             var lines = FileIO.readFile(textFileBPath);
-            tokensB = new TreeSet<String>();
-
-            for (var line : lines) {
-                var lineTokens = textPreprocessor.preprocess(line);
-
-                for (var token : lineTokens)
-                    tokensB.add(token);
-            }
+            tokensB = multithreadUploadTextFile(lines);
 
             checkMinimumTokensNumber(tokensB);
 
