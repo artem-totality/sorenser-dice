@@ -6,6 +6,8 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static ie.atu.sw.ConsoleIO.*;
+
 /**
  * Main Project Class (Engine)
  */
@@ -15,9 +17,12 @@ public class TextComparator {
     static final int MIN_TOKENS = 3;
 
     // Paths to work files
-    private Path textFileAPath = null;
-    private Path textFileBPath = null;
-    private Path stopWordsFilePath = null;
+    // private Path textFileAPath = null;
+    // private Path textFileBPath = null;
+    // private Path stopWordsFilePath = null;
+    private Path textFileAPath = Paths.get("./s.txt");
+    private Path textFileBPath = Paths.get("./t.txt");
+    private Path stopWordsFilePath = Paths.get("./g1000.txt");
 
     // Sets of words
     private Set<String> tokensA = null;
@@ -50,12 +55,7 @@ public class TextComparator {
         isFiltering = !isFiltering;
 
         // Print filtering mode
-        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-        System.out.print("Current filtering mode: ");
-        System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-        System.out.print(isFiltering ? "Enabled" : "Disabled");
-
-        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+        printMsg("Current filtering mode: ", isFiltering ? "Enabled" : "Disabled");
     }
 
     private void checkMinimumTokensNumber(Set<String> set) throws Exception {
@@ -99,13 +99,7 @@ public class TextComparator {
             checkMinimumTokensNumber(tokensA);
 
             // Print number uploaded words
-            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-            System.out.print("Was uploaded: ");
-            System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-            System.out.print(tokensA.size());
-
-            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-            System.out.println(" words");
+            printMsg("Words was uploaded: ", tokensA.size());
         } catch (Exception e) {
             System.err.println(e.getMessage());
             textFileAPath = null;
@@ -148,13 +142,8 @@ public class TextComparator {
             checkMinimumTokensNumber(tokensB);
 
             // Print number uploaded words
-            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-            System.out.print("Was uploaded: ");
-            System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-            System.out.print(tokensB.size());
-
-            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-            System.out.println(" words");
+            printMsg("Words was uploaded: ", tokensB.size());
+            ;
         } catch (Exception e) {
             System.err.println(e.getMessage());
             textFileBPath = null;
@@ -204,13 +193,7 @@ public class TextComparator {
             stopWordsFilter = new StopWordFilter(stopWordsSet, TextComparator.MIN_TOKENS);
 
             // Print number uploaded words
-            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-            System.out.print("Was uploaded: ");
-            System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-            System.out.print(stopWordsFilter.getSize());
-
-            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-            System.out.println(" words");
+            printMsg("Words was uploaded: ", stopWordsFilter.getSize());
         } catch (Exception e) {
             System.err.println(e.getMessage());
             stopWordsFilePath = null;
@@ -226,51 +209,28 @@ public class TextComparator {
 
     public void getSystemStatus() {
         // Print out text file A name
-        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-        System.out.print("Current text file A: ");
-        System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-        System.out.println(textFileAPath == null ? "Not Set" : textFileAPath);
+        printMsg("Current text file A: ", textFileAPath == null ? "Not Set" : textFileAPath);
 
         // Print out tokens A set status
-        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-        System.out.print("Current tokens A set: ");
-        System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-        System.out.println(tokensA == null ? "Not Set" : tokensA.size());
+        printMsg("Current tokens A set: ", tokensA == null ? "Not Set" : tokensA.size());
 
         // Print out text file B name
         System.out.println();
-        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-        System.out.print("Current text file B: ");
-        System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-        System.out.println(textFileBPath == null ? "Not Set" : textFileBPath);
+        printMsg("Current text file B: ", textFileBPath == null ? "Not Set" : textFileBPath);
 
         // Print out tokens B set status
-        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-        System.out.print("Current tokens B set: ");
-        System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-        System.out.println(tokensB == null ? "Not Set" : tokensB.size());
+        printMsg("Current tokens B set: ", tokensB == null ? "Not Set" : tokensB.size());
 
         // Print out stop words list name
         System.out.println();
-        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-        System.out.print("Current stop words list file: ");
-        System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-        System.out.println(stopWordsFilePath == null ? "Not Set" : stopWordsFilePath);
+        printMsg("Current stop words list file: ", stopWordsFilePath == null ? "Not Set" : stopWordsFilePath);
 
         // Print out Stop Words set status
-        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-        System.out.print("Current Stop Words set: ");
-        System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-        System.out.println(stopWordsFilter == null ? "Not Set" : stopWordsFilter.getSize());
+        printMsg("Current Stop Words set: ", stopWordsFilter == null ? "Not Set" : stopWordsFilter.getSize());
 
         // Print out text Filtering Mode
         System.out.println();
-        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-        System.out.print("Filtering Mode: ");
-        System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-        System.out.println(isFiltering ? "Enabled" : "Disabled");
-
-        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+        printMsg("Filtering Mode: ", isFiltering ? "Enabled" : "Disabled");
     }
 
     public void compareFiles() {
@@ -291,18 +251,10 @@ public class TextComparator {
 
             // Print out compearing results
             System.out.println();
-            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-            System.out.print("Dice Similarity: ");
-            System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-            System.out.println(String.format("%.2f", similarity));
+            printMsg("Dice Similarity: ", String.format("%.2f", similarity));
 
             // Print out text Filtering Mode
-            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-            System.out.print("Filtering Mode: ");
-            System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-            System.out.println(isFiltering ? "Enabled" : "Disabled");
-
-            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+            printMsg("Filtering Mode: ", isFiltering ? "Enabled" : "Disabled");
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
@@ -325,13 +277,7 @@ public class TextComparator {
             textANoiseRatio = stopWordsFilter.calculateNoiseRatio(tokensA);
 
             // Print out text Filtering Mode
-            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-            System.out.print("Text A Noise Ratio: ");
-            System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-            System.out.println(String.format("%.2f", textANoiseRatio));
-
-            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-
+            printMsg("Text A Noise Ratio: ", (int) (100 * textANoiseRatio) + "%");
         } catch (Exception e) {
             System.err.println(e.getMessage());
             isFilterNotApplicable = true;
@@ -341,21 +287,17 @@ public class TextComparator {
             textBNoiseRatio = stopWordsFilter.calculateNoiseRatio(tokensB);
 
             // Print out text Filtering Mode
-            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-            System.out.print("Text B Noise Ratio: ");
-            System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-            System.out.println(String.format("%.2f", textBNoiseRatio));
-
-            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-
+            printMsg("Text B Noise Ratio: ", (int) (100 * textBNoiseRatio) + "%");
         } catch (Exception e) {
             System.err.println(e.getMessage());
             isFilterNotApplicable = true;
         }
 
         if (isFilterNotApplicable) {
-            System.out.println("Filter Not Applicable!");
+            System.out.println();
+            printMsg("General conclusion: ", "Filter Not Applicable!");
             return;
         }
+
     }
 }

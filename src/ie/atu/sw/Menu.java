@@ -37,7 +37,7 @@ public class Menu {
                             : textComparator.getStopWordsFilePath())
                     + "]");
             System.out.println("(4) Compare Text Files");
-            System.out.println("(5) Switch Filtering Mode[Current - "
+            System.out.println("(5) Switch Filtering Mode [Current - "
                     + (textComparator.getIsFiltering() ? "Enabled" : "Disabled")
                     + "]");
             System.out.println("(6) Noise Analizer");

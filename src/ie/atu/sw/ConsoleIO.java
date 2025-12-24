@@ -7,7 +7,7 @@ public class ConsoleIO {
         System.out.flush();
     }
 
-    public final static void printMsg(String caption, String value) {
+    public final static void printMsg(Object caption, Object value) {
         System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
         System.out.print(caption);
         System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
