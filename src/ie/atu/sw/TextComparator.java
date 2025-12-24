@@ -2,12 +2,14 @@ package ie.atu.sw;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.StructuredTaskScope;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static ie.atu.sw.ConsoleIO.*;
 
@@ -86,12 +88,40 @@ public class TextComparator {
 
     private ConcurrentSkipListSet<String> multithreadUploadTextFile(List<String> lines) throws Exception {
         var tokens = new ConcurrentSkipListSet<String>();
+        AtomicInteger processed = new AtomicInteger();
+        int total = lines.size();
 
         try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+
+            scope.fork(() -> {
+                System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
+
+                while (!Thread.currentThread().isInterrupted()
+                        && processed.get() < total) {
+
+                    int done = processed.get();
+                    printProgress(done, total);
+
+                    try {
+                        Thread.sleep(Duration.ofMillis(100));
+                    } catch (InterruptedException e) {
+                        break;
+                    }
+                }
+
+                printProgress(total, total);
+                System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+                System.out.println();
+                System.out.println();
+
+                return null;
+            });
+
             for (var line : lines) {
                 scope.fork(() -> {
                     var lineTokens = textPreprocessor.preprocess(line);
                     tokens.addAll(lineTokens);
+                    processed.incrementAndGet();
 
                     return null;
                 });
@@ -288,6 +318,14 @@ public class TextComparator {
         }
     }
 
+    private void printTextNoiseRatio(String label, double textNoiseRatio) {
+        printMsg(label, (int) (100 * textNoiseRatio) + "%");
+        System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
+        printProgress((int) (100 * textNoiseRatio), 100);
+        System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
+        System.out.println();
+    }
+
     public void noiseAnalyzer() {
         if (stopWordsFilePath == null || tokensA == null || tokensB == null) {
             // Print out text Filtering Mode
@@ -315,11 +353,7 @@ public class TextComparator {
             textANoiseRatio = stopWordsFilter.calculateNoiseRatio(tokensA);
 
             // Print out text Filtering Mode
-            printMsg("Text A Noise Ratio: ", (int) (100 * textANoiseRatio) + "%");
-            System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-            printProgress((int) (100 * textANoiseRatio), 100);
-            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-            System.out.println();
+            printTextNoiseRatio("Text A Noise Ratio: ", textANoiseRatio);
         } catch (Exception e) {
             printErr(e);
             isFilterNotApplicable = true;
@@ -330,11 +364,7 @@ public class TextComparator {
             textBNoiseRatio = stopWordsFilter.calculateNoiseRatio(tokensB);
 
             // Print out text Filtering Mode
-            printMsg("Text B Noise Ratio: ", (int) (100 * textBNoiseRatio) + "%");
-            System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
-            printProgress((int) (100 * textBNoiseRatio), 100);
-            System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
-            System.out.println();
+            printTextNoiseRatio("Text B Noise Ratio: ", textBNoiseRatio);
         } catch (Exception e) {
             printErr(e);
             isFilterNotApplicable = true;
