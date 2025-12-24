@@ -2,6 +2,7 @@ package ie.atu.sw;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
@@ -83,6 +84,26 @@ public class TextComparator {
             throw new Exception("A minimum of three unique tokens is required!!!");
     }
 
+    private ConcurrentSkipListSet<String> multithreadUploadTextFile(List<String> lines) throws Exception {
+        var tokens = new ConcurrentSkipListSet<String>();
+
+        try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+            for (var line : lines) {
+                scope.fork(() -> {
+                    var lineTokens = textPreprocessor.preprocess(line);
+                    tokens.addAll(lineTokens);
+
+                    return null;
+                });
+            }
+
+            scope.join();
+            scope.throwIfFailed();
+        }
+
+        return tokens;
+    }
+
     /**
      * Prompt user to enter text A file name and upload it
      * to the system
@@ -107,20 +128,7 @@ public class TextComparator {
 
         try {
             var lines = FileIO.readFile(textFileAPath);
-            tokensA = new ConcurrentSkipListSet<String>();
-
-            try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
-                for (var line : lines) {
-                    scope.fork(() -> {
-                        var lineTokens = textPreprocessor.preprocess(line);
-                        tokensA.addAll(lineTokens);
-
-                        return null;
-                    });
-                }
-                scope.join();
-                scope.throwIfFailed();
-            }
+            tokensA = multithreadUploadTextFile(lines);
 
             checkMinimumTokensNumber(tokensA);
 
