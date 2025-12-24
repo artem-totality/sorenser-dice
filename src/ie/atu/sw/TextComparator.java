@@ -5,6 +5,8 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.StructuredTaskScope;
 
 import static ie.atu.sw.ConsoleIO.*;
 
@@ -105,13 +107,19 @@ public class TextComparator {
 
         try {
             var lines = FileIO.readFile(textFileAPath);
-            tokensA = new TreeSet<String>();
+            tokensA = new ConcurrentSkipListSet<String>();
 
-            for (var line : lines) {
-                var lineTokens = textPreprocessor.preprocess(line);
+            try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
+                for (var line : lines) {
+                    scope.fork(() -> {
+                        var lineTokens = textPreprocessor.preprocess(line);
+                        tokensA.addAll(lineTokens);
 
-                for (var token : lineTokens)
-                    tokensA.add(token);
+                        return null;
+                    });
+                }
+                scope.join();
+                scope.throwIfFailed();
             }
 
             checkMinimumTokensNumber(tokensA);
@@ -341,19 +349,19 @@ public class TextComparator {
         System.out.println();
         if (maxRatio < 0.2) {
             printMsg("General conclusion: ",
-                    "Max noise ratio is " + (int) (100 * textANoiseRatio) + "% - "
+                    "Max noise ratio is " + (int) (100 * maxRatio) + "% - "
                             + FilterRequirement.NO_FILTER_NEEDED);
             return;
         }
 
         if (0.2 <= maxRatio && maxRatio <= 0.4) {
             printMsg("General conclusion: ",
-                    "Max noise ratio is " + (int) (100 * textANoiseRatio) + "% "
+                    "Max noise ratio is " + (int) (100 * maxRatio) + "% "
                             + FilterRequirement.AT_YOUR_DISCRETION);
             return;
         }
 
         printMsg("General conclusion: ",
-                "Max noise ratio is " + (int) (100 * textANoiseRatio) + "% " + FilterRequirement.HIGHLY_DESIRABLE);
+                "Max noise ratio is " + (int) (100 * maxRatio) + "% " + FilterRequirement.HIGHLY_DESIRABLE);
     }
 }
