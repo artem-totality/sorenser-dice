@@ -1,5 +1,9 @@
 # Compiled classes
+*.jar
 *.class
+bin/
+target/
+build/
 
 # Text files
 *.txt
