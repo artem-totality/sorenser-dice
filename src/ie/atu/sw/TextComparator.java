@@ -13,10 +13,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static ie.atu.sw.ConsoleIO.*;
 
+/**
+ * Defines filtering recommendation levels based on text noise ratio.
+ *
+ * This enum is used to provide user-friendly interpretations
+ * of the calculated stop-word noise ratio.
+ */
 enum FilterRequirement {
+    /** Filtering is unnecessary */
     NO_FILTER_NEEDED("No filter needed"),
+
+    /** Filtering may or may not improve results */
     AT_YOUR_DISCRETION("At your discretion"),
+
+    /** Filtering is strongly recommended */
     HIGHLY_DESIRABLE("A filter is highly desirable"),
+
+    /** Filtering cannot be applied due to insufficient tokens */
     NOT_APPLICABLE("Filter Not Applicable!");
 
     private final String displayName;
@@ -25,6 +38,9 @@ enum FilterRequirement {
         this.displayName = displayName;
     }
 
+    /**
+     * Returns a human-readable description of the filtering requirement.
+     */
     @Override
     public String toString() {
         return displayName;
@@ -32,48 +48,70 @@ enum FilterRequirement {
 }
 
 /**
- * Main Project Class (Engine)
+ * Main application engine responsible for:
+ *
+ * <ul>
+ * <li>loading text files and stop-word lists</li>
+ * <li>preprocessing text data</li>
+ * <li>managing filtering mode</li>
+ * <li>calculating Sørensen–Dice similarity</li>
+ * <li>analyzing stop-word noise ratios</li>
+ * </ul>
+ *
+ * This class coordinates all components of the system and
+ * acts as the central controller in a CLI-based workflow.
  */
-
 public class TextComparator {
-    // Minimum number of tokens for similarity calculation
+    /** Minimum number of unique tokens required for similarity calculation */
     static final int MIN_TOKENS = 3;
 
-    // Paths to work files
+    /** Paths to input text files and stop-word list */
     // private Path textFileAPath = null;
     // private Path textFileBPath = null;
     // private Path stopWordsFilePath = null;
+
+    /** Paths to input text files and stop-word list */
     private Path textFileAPath = Paths.get("./s.txt");
     private Path textFileBPath = Paths.get("./t.txt");
     private Path stopWordsFilePath = Paths.get("./g1000.txt");
 
-    // Sets of words
+    /** Token sets extracted from the input text files */
     private Set<String> tokensA = null;
     private Set<String> tokensB = null;
+
+    /** Stop-word filter instance (optional) */
     private StopWordFilter stopWordsFilter = null;
 
-    // Text Preprocessor
+    /** Text preprocessing utility */
     private final TextPreprocessor textPreprocessor = new TextPreprocessor();
 
-    // Filtering mode
+    /** Indicates whether stop-word filtering is enabled */
     private boolean isFiltering = false;
 
+    /** Returns the current path to text file A */
     public Path getTextFileAPath() {
         return textFileAPath;
     }
 
+    /** Returns the current path to text file B */
     public Path getTextFileBPath() {
         return textFileBPath;
     }
 
+    /** Returns the current path to the stop-word list file */
     public Path getStopWordsFilePath() {
         return stopWordsFilePath;
     }
 
+    /** Indicates whether filtering mode is currently enabled */
     public boolean getIsFiltering() {
         return isFiltering;
     }
 
+    /**
+     * Toggles stop-word filtering mode on or off.
+     * Prints the updated filtering state to the console.
+     */
     public void switchFilteringMode() {
         isFiltering = !isFiltering;
 
@@ -81,18 +119,35 @@ public class TextComparator {
         printMsg("Current filtering mode: ", isFiltering ? "Enabled" : "Disabled");
     }
 
+    /**
+     * Ensures that a token set contains at least the minimum
+     * required number of tokens.
+     *
+     * @throws Exception if the token set is too small
+     */
     private void checkMinimumTokensNumber(Set<String> set) throws Exception {
         if (set.size() < TextComparator.MIN_TOKENS)
             throw new Exception("A minimum of three unique tokens is required!!!");
     }
 
+    /**
+     * Loads and preprocesses a text file using multiple virtual threads.
+     *
+     * Each line is processed independently and tokenized in parallel.
+     * A progress indicator is displayed while processing is in progress.
+     *
+     * @param lines the lines of the input text file
+     * @return a thread-safe set of unique tokens
+     * @throws Exception if any task fails
+     */
     private ConcurrentSkipListSet<String> multithreadUploadTextFile(List<String> lines) throws Exception {
         var tokens = new ConcurrentSkipListSet<String>();
-        AtomicInteger processed = new AtomicInteger();
+        AtomicInteger processed = new AtomicInteger(); // Current progress counter
         int total = lines.size();
 
         try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
 
+            // Progress monitoring task
             scope.fork(() -> {
                 System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
 
@@ -117,7 +172,9 @@ public class TextComparator {
                 return null;
             });
 
+            // Parallel preprocessing tasks
             for (var line : lines) {
+                // Process each line as separate task
                 scope.fork(() -> {
                     var lineTokens = textPreprocessor.preprocess(line);
                     tokens.addAll(lineTokens);
@@ -135,10 +192,9 @@ public class TextComparator {
     }
 
     /**
-     * Prompt user to enter text A file name and upload it
-     * to the system
+     * Prompts the user to select and upload text file A.
+     * The file is preprocessed and converted into a token set.
      */
-
     public void uploadTextFileA() {
         // using scanner for getting input from user
         System.out.print("Input Text File A Name [Current - "
@@ -172,8 +228,8 @@ public class TextComparator {
     };
 
     /**
-     * Prompt user to enter text B file name and upload it
-     * to the system
+     * Prompts the user to select and upload text file B.
+     * The file is preprocessed and converted into a token set.
      */
     public void uploadTextFileB() {
         // using scanner for getting input from user
@@ -208,6 +264,12 @@ public class TextComparator {
         }
     };
 
+    /**
+     * Loads and validates a stop-word list from a file.
+     *
+     * Each line of the file must contain exactly one word.
+     * Empty lines are ignored.
+     */
     public void uploadStopWordFilter() {
         // using scanner for getting input from user
         System.out.print("Input Stop Word List File Name [Current - " +
@@ -260,11 +322,9 @@ public class TextComparator {
     }
 
     /**
-     * Show current system status: File A, File B, Stop Words List
-     * and Using Stop Words List Mode
-     * 
+     * Displays the current system status, including loaded files,
+     * token counts, and filtering mode.
      */
-
     public void getSystemStatus() {
         // Print out text file A name
         printMsg("Current text file A: ", textFileAPath == null ? "Not Set" : textFileAPath);
@@ -291,6 +351,10 @@ public class TextComparator {
         printMsg("Filtering Mode: ", isFiltering ? "Enabled" : "Disabled");
     }
 
+    /**
+     * Performs Sørensen–Dice similarity comparison between
+     * the two loaded text files.
+     */
     public void compareFiles() {
         try {
             if (tokensA == null)
@@ -318,6 +382,9 @@ public class TextComparator {
         }
     }
 
+    /**
+     * Prints a visual representation of a text's noise ratio.
+     */
     private void printTextNoiseRatio(String label, double textNoiseRatio) {
         printMsg(label, (int) (100 * textNoiseRatio) + "%");
         System.out.print(ConsoleColour.YELLOW_BOLD_BRIGHT);
@@ -326,6 +393,10 @@ public class TextComparator {
         System.out.println();
     }
 
+    /**
+     * Analyzes stop-word noise ratios for both texts and
+     * provides a filtering recommendation.
+     */
     public void noiseAnalyzer() {
         if (stopWordsFilter == null || tokensA == null || tokensB == null) {
             // Print out text Filtering Mode
