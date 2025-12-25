@@ -13,13 +13,22 @@ package ie.atu.sw;
  * by computing the Sørensen–Dice similarity coefficient, with
  * optional stop-word filtering and noise analysis.
  *
+ * *
+ * <p>
+ * The full project history can be explored in the repository:
+ * <a href="https://github.com/artem-totality/sorenser-dice">
+ * https://github.com/artem-totality/sorenser-dice</a>
+ * 
+ * <p>
+ * If you have any questions, please feel free to ask.
+ * 
  * <p>
  * <b>Module:</b> Software Design & Data Structures – Final Project
  * 
- * @author Artem Vasylevytskyi
+ * @author Artem Vasylevytskyi <a href=
+ *         "https://www.codewars.com/users/artem-totality">artem-totality</a>
  * @version 1.0
  */
-
 public class Runner {
 
     /**
