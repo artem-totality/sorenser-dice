@@ -78,6 +78,26 @@ Enhances usability by displaying colored status messages and real-time progress 
 
 ---
 
+## Building the Project
+
+To compile the project and create the executable JAR file, run the build script:
+
+```bash
+./build.sh
+```
+
+This will:
+
+1. Compile all Java source files from `src/ie/atu/sw/`
+2. Create an executable JAR file named `dice.jar`
+
+**Requirements:**
+
+- Java 23 or higher
+- Preview features enabled
+
+---
+
 ## Running the Application
 
 The project is distributed as an executable JAR file.
