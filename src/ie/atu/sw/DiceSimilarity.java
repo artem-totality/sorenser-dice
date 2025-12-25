@@ -2,13 +2,27 @@ package ie.atu.sw;
 
 import java.util.Set;
 
+/**
+ * Utility class for calculating text similarity using the Sørensen–Dice
+ * coefficient.
+ *
+ * This implementation operates on sets of unique tokens.
+ */
 public class DiceSimilarity {
     /**
-     * Calculates Sørensen–Dice similarity
+     * Calculates the Sørensen–Dice similarity coefficient for two token sets.
+     *
+     * The coefficient is defined as:
      * 
-     * @param tokensA - first tokens set
-     * @param tokensB - second tokens set
-     * @return similarity coefficient
+     * <pre>
+     *     Dice = 2 × |A ∩ B| / (|A| + |B|)
+     * </pre>
+     *
+     * This method assumes that both input sets are non-null.
+     *
+     * @param tokensA the first set of tokens
+     * @param tokensB the second set of tokens
+     * @return the Sørensen–Dice similarity coefficient
      */
     public static double calculate(
             Set<String> tokensA,
@@ -18,11 +32,17 @@ public class DiceSimilarity {
     }
 
     /**
-     * Calculates the size of the intersection of two sets
-     * 
-     * @param a - first tokens set
-     * @param b - second tokens set
-     * @return number of common elements
+     * Calculates the size of the intersection of two token sets.
+     *
+     * For performance reasons, the method always iterates over the smaller
+     * of the two sets and checks membership in the larger set.
+     *
+     * This method also produces console output showing the progress of the
+     * intersection calculation.
+     *
+     * @param a the first token set
+     * @param b the second token set
+     * @return the number of common elements in both sets
      */
     private static int intersectionSize(
             Set<String> a,
