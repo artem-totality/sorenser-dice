@@ -5,5 +5,8 @@ bin/
 target/
 build/
 
+# Generated Documentation Folder
+docs/
+
 # Text files
 *.txt

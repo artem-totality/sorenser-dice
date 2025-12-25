@@ -23,7 +23,7 @@ package ie.atu.sw;
  * If you have any questions, please feel free to ask.
  * 
  * <p>
- * <b>Module:</b> Software Design & Data Structures – Final Project
+ * <b>Module:</b> Software Design and Data Structures – Final Project
  * 
  * @author Artem Vasylevytskyi <a href=
  *         "https://www.codewars.com/users/artem-totality">artem-totality</a>

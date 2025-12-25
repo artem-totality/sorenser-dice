@@ -90,6 +90,7 @@ This will:
 
 1. Compile all Java source files from `src/ie/atu/sw/`
 2. Create an executable JAR file named `dice.jar`
+3. Generating Javadoc `docs/`
 
 **Requirements:**
 
