@@ -3,16 +3,22 @@ package ie.atu.sw;
 import java.util.Scanner;
 
 /**
- * Class for creating and printing main console-based menu
- * 
+ * Console-based menu controller.
+ *
+ * This class is responsible for:
+ * <ul>
+ * <li>displaying the main application menu</li>
+ * <li>handling user input</li>
+ * </ul>
  */
-
 public class Menu {
 
     /**
-     * Method prints out the menu in the loop
+     * Starts and maintains the main interactive menu loop.
+     *
+     * The method runs until the user explicitly chooses to quit
+     * the application.
      */
-
     public static void performMenu() {
         Scanner s = new Scanner(System.in);
         var textComparator = new TextComparator();
