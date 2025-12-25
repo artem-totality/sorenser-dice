@@ -66,14 +66,9 @@ public class TextComparator {
     static final int MIN_TOKENS = 3;
 
     /** Paths to input text files and stop-word list */
-    // private Path textFileAPath = null;
-    // private Path textFileBPath = null;
-    // private Path stopWordsFilePath = null;
-
-    /** Paths to input text files and stop-word list */
-    private Path textFileAPath = Paths.get("./s.txt");
-    private Path textFileBPath = Paths.get("./t.txt");
-    private Path stopWordsFilePath = Paths.get("./g1000.txt");
+    private Path textFileAPath = null;
+    private Path textFileBPath = null;
+    private Path stopWordsFilePath = null;
 
     /** Token sets extracted from the input text files */
     private Set<String> tokensA = null;

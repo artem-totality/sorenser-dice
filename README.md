@@ -108,6 +108,12 @@ The project is distributed as an executable JAR file.
 java --enable-preview -jar dice.jar
 ```
 
+Alternatively, use the run script:
+
+```bash
+./run.sh
+```
+
 ---
 
 ## Requirements
