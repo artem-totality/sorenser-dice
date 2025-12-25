@@ -1,12 +1,38 @@
 package ie.atu.sw;
 
+/**
+ * Console input/output utility class.
+ *
+ * This class provides helper methods for:
+ * <ul>
+ * <li>clearing the console screen</li>
+ * <li>printing formatted informational messages</li>
+ * <li>printing formatted error messages</li>
+ * <li>displaying a terminal-based progress bar</li>
+ * </ul>
+ *
+ * The class is designed for use in ANSI-compatible terminals
+ * (Linux, macOS, Windows Terminal).
+ */
 public class ConsoleIO {
-    // method clears console for the next output
+    /**
+     * Clears the console screen using ANSI escape sequences.
+     */
     public final static void clearConsole() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
+    /**
+     * Prints a formatted informational message consisting of a caption
+     * and a value.
+     *
+     * The caption is printed using the default console color,
+     * while the value is highlighted for readability.
+     *
+     * @param caption descriptive label
+     * @param value   associated value to display
+     */
     public final static void printMsg(Object caption, Object value) {
         System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
         System.out.print(caption);
@@ -16,6 +42,14 @@ public class ConsoleIO {
         System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
     }
 
+    /**
+     * Prints a formatted error message to the console.
+     *
+     * The error message is displayed in red to clearly indicate
+     * an exceptional state.
+     *
+     * @param e the exception whose message will be displayed
+     */
     public final static void printErr(Exception e) {
         System.out.print(ConsoleColour.RED_BOLD_BRIGHT);
         System.out.println(e.getMessage());
