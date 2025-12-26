@@ -63,7 +63,7 @@ enum FilterRequirement {
  */
 public class TextComparator {
     /** Minimum number of unique tokens required for similarity calculation */
-    static final int MIN_TOKENS = 3;
+    public static final int MIN_TOKENS = 3;
 
     /** Paths to input text files and stop-word list */
     private Path textFileAPath = null;
@@ -251,7 +251,6 @@ public class TextComparator {
 
             // Print number uploaded words
             printMsg("Words was uploaded: ", tokensB.size());
-            ;
         } catch (Exception e) {
             printErr(e);
             textFileBPath = null;
@@ -394,7 +393,7 @@ public class TextComparator {
      */
     public void noiseAnalyzer() {
         if (stopWordsFilter == null || tokensA == null || tokensB == null) {
-            // Print out text Filtering Mode
+            // Print out notification and exit
             System.out.print(ConsoleColour.RED_BOLD_BRIGHT);
             System.out.println("Please Upload Text A, Text B and Stop Word List!!!");
             System.out.print(ConsoleColour.BLACK_BOLD_BRIGHT);
